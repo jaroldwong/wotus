@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap';
 import './App.css';
 
+import WorkOrders from './components/WorkOrders';
+
 class App extends Component {
   render() {
     return (
@@ -16,6 +18,10 @@ class App extends Component {
             <NavItem href="#new">Report New Issue</NavItem>
           </Nav>
         </Navbar>
+
+        <Grid>
+          <WorkOrders />
+        </Grid>
       </div>
     );
   }
