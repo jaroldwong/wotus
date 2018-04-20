@@ -1,28 +1,36 @@
 import React, { Component } from 'react';
 import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
+import { LinkContainer } from 'react-router-bootstrap';
 import './App.css';
 
-import WorkOrders from './components/WorkOrders';
+import WorkOrderList from './components/WorkOrderList';
+import FormNew from './components/FormNew';
 
 class App extends Component {
   render() {
     return (
-      <div>
-        <Navbar fixedTop>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <a href="/">Work Order Status</a>
-            </Navbar.Brand>
-          </Navbar.Header>
-          <Nav pullRight>
-            <NavItem href="#new">Report New Issue</NavItem>
-          </Nav>
-        </Navbar>
+      <Router>
+        <div>
+          <Navbar fixedTop>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <Link to="/">Work Order Status</Link>
+              </Navbar.Brand>
+            </Navbar.Header>
+            <Nav pullRight>
+              <LinkContainer to="/new">
+                <NavItem>Report New Issue</NavItem>
+              </LinkContainer>
+            </Nav>
+          </Navbar>
 
-        <Grid>
-          <WorkOrders />
-        </Grid>
-      </div>
+          <Grid>
+            <Route path="/new" component={FormNew} />
+            <Route path="/workorders" component={WorkOrderList} />
+          </Grid>
+        </div>
+      </Router>
     );
   }
 }
