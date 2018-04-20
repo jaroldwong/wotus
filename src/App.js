@@ -6,11 +6,27 @@ import './App.css';
 
 import WorkOrderList from './components/WorkOrderList';
 import FormNew from './components/FormNew';
+import FormEdit from './components/FormEdit';
+import WorkOrderIndex from './components/WorkOrderIndex';
+
+import { data } from './seed';
 
 class App extends Component {
+  state = { data };
+
+  handleCreateWO = (formData, e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
+  handleUpdateWO = (formData, e) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
   render() {
     return (
-      <Router>
+      <Router basename="/wotus">
         <div>
           <Navbar fixedTop>
             <Navbar.Header>
@@ -26,8 +42,27 @@ class App extends Component {
           </Navbar>
 
           <Grid>
-            <Route path="/new" component={FormNew} />
-            <Route path="/workorders" component={WorkOrderList} />
+            {/* <Route path="/new" component={FormNew} /> */}
+            <Route
+              path="/new"
+              render={routeProps => (
+                <FormNew onSubmit={this.handleCreateWO} {...routeProps} />
+              )}
+            />
+            <Route
+              path="/workorders/:id"
+              render={routeProps => (
+                <FormEdit onSubmit={this.handleUpdateWO} {...routeProps} />
+              )}
+            />
+            <Route exact path="/workorders" component={WorkOrderList} />
+            <Route
+              exact
+              path="/"
+              render={routeProps => (
+                <WorkOrderIndex data={this.state.data} {...routeProps} />
+              )}
+            />
           </Grid>
         </div>
       </Router>

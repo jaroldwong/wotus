@@ -1,5 +1,11 @@
 import React, { Component } from 'react';
-import { Form, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import {
+  Form,
+  FormGroup,
+  ControlLabel,
+  FormControl,
+  Button
+} from 'react-bootstrap';
 
 class FormNew extends Component {
   constructor(props) {
@@ -17,6 +23,7 @@ class FormNew extends Component {
     const { name, value } = e.target;
     this.setState({ [name]: value });
   };
+
   render() {
     return (
       <Form>
@@ -60,6 +67,10 @@ class FormNew extends Component {
             onChange={this.handleChange}
           />
         </FormGroup>
+
+        <Button type="submit" onClick={e => this.props.onSubmit(this.state, e)}>
+          Submit
+        </Button>
       </Form>
     );
   }
