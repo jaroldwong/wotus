@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap';
-import { Route, Link, withRouter } from 'react-router-dom';
+import { BrowserRouter, Route, Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import './App.css';
 
@@ -14,35 +14,37 @@ class App extends Component {
 
   render() {
     return (
-      <div>
-        <Navbar fixedTop>
-          <Navbar.Header>
-            <Navbar.Brand>
-              <Link to="/">Work Order Status</Link>
-            </Navbar.Brand>
-          </Navbar.Header>
-          <Nav pullRight>
-            <LinkContainer to="/new">
-              <NavItem>Report New Issue</NavItem>
-            </LinkContainer>
-          </Nav>
-        </Navbar>
+      <BrowserRouter>
+        <div>
+          <Navbar fixedTop>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <Link to="/">Work Order Status</Link>
+              </Navbar.Brand>
+            </Navbar.Header>
+            <Nav pullRight>
+              <LinkContainer to="/new">
+                <NavItem>Report New Issue</NavItem>
+              </LinkContainer>
+            </Nav>
+          </Navbar>
 
-        <Grid>
-          {/* <Route path="/new" component={FormNew} /> */}
-          <Route path="/new" component={FormNew} />
-          <Route
-            path="/workorders/:id"
-            render={routeProps => (
-              <FormEdit onSubmit={this.updateWorkOrder} {...routeProps} />
-            )}
-          />
-          <Route exact path="/workorders" component={WorkOrderList} />
-          <Route exact path="/" component={WorkOrderIndex} />
-        </Grid>
-      </div>
+          <Grid>
+            {/* <Route path="/new" component={FormNew} /> */}
+            <Route path="/new" component={FormNew} />
+            <Route
+              path="/workorders/:id"
+              render={routeProps => (
+                <FormEdit onSubmit={this.updateWorkOrder} {...routeProps} />
+              )}
+            />
+            <Route exact path="/workorders" component={WorkOrderList} />
+            <Route exact path="/" component={WorkOrderIndex} />
+          </Grid>
+        </div>
+      </BrowserRouter>
     );
   }
 }
 
-export default withRouter(App);
+export default App;
