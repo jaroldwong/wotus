@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Grid, Navbar, Nav, NavItem } from 'react-bootstrap';
-import { Route, Link, Redirect, withRouter } from 'react-router-dom';
+import { Route, Link, withRouter } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import './App.css';
 
@@ -8,8 +8,6 @@ import WorkOrderList from './components/WorkOrderList';
 import FormNew from './components/FormNew';
 import FormEdit from './components/FormEdit';
 import WorkOrderIndex from './components/WorkOrderIndex';
-
-import axios from 'axios';
 
 class App extends Component {
   updateWorkOrder = formData => {};
