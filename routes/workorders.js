@@ -42,7 +42,18 @@ const data = [
 // Index & Create
 router
   .get('/', (req, res) => res.status(200).json(data))
-  .post('/', (req, res) => res.send('Create'));
+  .post('/', (req, res) => {
+    const product = {
+      subject: req.body.subject,
+      submitter: req.body.submitter,
+      status: req.body.status,
+      details: req.body.details
+    };
+
+    res.status(201).json({
+      message: 'Work order was created'
+    });
+  });
 
 // Show, Update, Destroy
 router
