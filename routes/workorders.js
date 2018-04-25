@@ -2,68 +2,44 @@ const express = require('express');
 const router = express.Router();
 const WorkOrder = require('../models/workorder');
 
-const data = [
-  {
-    subject: 'broken light',
-    submitter: 'PSgrad',
-    status: 'reported to facilities',
-    details:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id sapien ultrices'
-  },
-  {
-    subject: 'clogged toilet',
-    submitter: 'linfac',
-    status: 'work scheduled',
-    details:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id sapien ultrices'
-  },
-  {
-    subject: 'broken light',
-    submitter: 'PSgrad',
-    status: 'awaiting',
-    details:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id sapien ultrices'
-  },
-  {
-    subject: 'broken light',
-    submitter: 'PSgrad',
-    status: 'reported to facilities',
-    details:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id sapien ultrices'
-  },
-  {
-    subject: 'broken light',
-    submitter: 'PSgrad',
-    status: 'reported to facilities',
-    details:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus id sapien ultrices'
-  }
-];
-
-// Index & Create
 router
-  .get('/', (req, res) => res.status(200).json(data))
+  .get('/', (req, res) => {
+    WorkOrder.find({})
+      .then(workorders => {
+        res.status(200).json(workorders);
+        console.log(workorders);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }) // Index
   .post('/', (req, res) => {
-    const workorder = {
-      subject: req.body.subject,
-      submitter: req.body.submitter,
-      status: req.body.status,
-      details: req.body.details
-    };
-
-    WorkOrder.create(workorder).then(workorder => {
+    WorkOrder.create(req.body).then(workorder => {
       res.status(201).json({ message: 'Work order was successfully created' });
     });
+  }); // Create
 
-    // res.status(201).json({
-    //   message: 'Work order was created'
-    // });
-  });
-
-// Show, Update, Destroy
 router
-  .get('/:id', (req, res) => res.json(data[req.params.id]))
-  .put('/:id', (req, res) => res.send('Update route'))
-  .delete('/:id', (req, res) => res.send('Delete route'));
+  .get('/:id', (req, res) => {
+    WorkOrder.findById(req.params.id)
+      .then(workorder => {
+        res.status(200).json(workorder);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }) // Show
+  .put('/:id', (req, res) => {
+    WorkOrder.findByIdAndUpdate(req.params.id, req.body, { new: true })
+      .then(workorder => {
+        res.status(204).json(workorder);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }) // Update
+  .delete('/:id', (req, res) => {
+    WorkOrder.findByIdAndRemove(req.params.id).then(res.sendStatus(204));
+  }); // Delete
 
 module.exports = router;
