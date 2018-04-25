@@ -1,25 +1,18 @@
+require('dotenv').config();
+
 const express = require('express');
+const cors = require('cors');
 const app = express();
-const workorderRoutes = require('./routes/workorders');
+const mongoose = require('mongoose');
+
+// MongoDB setup
+mongoose.connect(process.env.DB_URI);
 
 // Middleware
 app.use(express.json());
-// Handling CORS
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authroization'
-  );
-  if (req.method === 'OPTIONS') {
-    res.header('Access-Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-    return res.status(200).json({});
-  }
-  next();
-});
+app.use(cors({ origin: 'http://localhost:3000' }));
 
-app.get('/', (req, res) => res.send('Hellow World!'));
-app.use('/api/workorders', workorderRoutes);
+app.use('/api/workorders', require('./routes/workorders'));
 
 app.use((req, res, next) => {
   const error = new Error('Not found');

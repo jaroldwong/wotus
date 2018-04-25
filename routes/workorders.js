@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+const WorkOrder = require('../models/workorder');
 
 const data = [
   {
@@ -43,16 +44,20 @@ const data = [
 router
   .get('/', (req, res) => res.status(200).json(data))
   .post('/', (req, res) => {
-    const product = {
+    const workorder = {
       subject: req.body.subject,
       submitter: req.body.submitter,
       status: req.body.status,
       details: req.body.details
     };
 
-    res.status(201).json({
-      message: 'Work order was created'
+    WorkOrder.create(workorder).then(workorder => {
+      res.status(201).json({ message: 'Work order was successfully created' });
     });
+
+    // res.status(201).json({
+    //   message: 'Work order was created'
+    // });
   });
 
 // Show, Update, Destroy
