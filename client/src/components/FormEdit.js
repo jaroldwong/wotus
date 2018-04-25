@@ -32,6 +32,11 @@ class FormEdit extends Component {
     this.setState({ [name]: value });
   };
 
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.onSubmit(this.state);
+  };
+
   render() {
     return (
       <Form>
@@ -76,7 +81,7 @@ class FormEdit extends Component {
           />
         </FormGroup>
 
-        <Button type="submit" onClick={e => this.props.onSubmit(this.state, e)}>
+        <Button type="submit" onClick={this.handleSubmit}>
           Submit
         </Button>
       </Form>

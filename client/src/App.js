@@ -10,20 +10,25 @@ import FormEdit from './components/FormEdit';
 import WorkOrderIndex from './components/WorkOrderIndex';
 
 import { data } from './seed';
+import axios from 'axios';
 
 class App extends Component {
   state = { data };
 
-  handleCreateWO = (formData, e) => {
-    e.preventDefault();
-    console.log(formData);
+  createWorkOrder = formData => {
+    axios
+      .post('/api/workorders', formData)
+      .then(res => {
+        console.log(res);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
     this.props.history.push('/');
   };
 
-  handleUpdateWO = (formData, e) => {
-    e.preventDefault();
-    console.log(formData);
-  };
+  updateWorkOrder = formData => {};
 
   render() {
     return (
@@ -46,13 +51,13 @@ class App extends Component {
           <Route
             path="/new"
             render={routeProps => (
-              <FormNew onSubmit={this.handleCreateWO} {...routeProps} />
+              <FormNew onSubmit={this.createWorkOrder} {...routeProps} />
             )}
           />
           <Route
             path="/workorders/:id"
             render={routeProps => (
-              <FormEdit onSubmit={this.handleUpdateWO} {...routeProps} />
+              <FormEdit onSubmit={this.updateWorkOrder} {...routeProps} />
             )}
           />
           <Route exact path="/workorders" component={WorkOrderList} />
