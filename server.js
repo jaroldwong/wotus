@@ -14,21 +14,21 @@ app.use(cors({ origin: 'http://localhost:3000' }));
 
 app.use('/api/workorders', require('./routes/workorders'));
 
-app.use((req, res, next) => {
-  const error = new Error('Not found');
-  error.status = 404;
-  next(error);
-});
+// app.use((req, res, next) => {
+//   const error = new Error('Not found');
+//   error.status = 404;
+//   next(error);
+// });
 
 // Error-handling
-app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json({
-    error: {
-      message: error.message
-    }
-  });
-});
+// app.use((error, req, res, next) => {
+//   res.status(error.status || 500);
+//   res.json({
+//     error: {
+//       message: error.message
+//     }
+//   });
+// });
 
 if (process.env.NODE_ENV === 'production') {
   // serve up production assets like main.js, main.css
