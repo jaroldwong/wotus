@@ -9,25 +9,9 @@ import FormNew from './components/FormNew';
 import FormEdit from './components/FormEdit';
 import WorkOrderIndex from './components/WorkOrderIndex';
 
-import { data } from './seed';
 import axios from 'axios';
 
 class App extends Component {
-  state = { data };
-
-  createWorkOrder = formData => {
-    axios
-      .post('/api/workorders', formData)
-      .then(res => {
-        console.log(res);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    this.props.history.push('/');
-  };
-
   updateWorkOrder = formData => {};
 
   render() {
@@ -48,12 +32,7 @@ class App extends Component {
 
         <Grid>
           {/* <Route path="/new" component={FormNew} /> */}
-          <Route
-            path="/new"
-            render={routeProps => (
-              <FormNew onSubmit={this.createWorkOrder} {...routeProps} />
-            )}
-          />
+          <Route path="/new" component={FormNew} />
           <Route
             path="/workorders/:id"
             render={routeProps => (
@@ -61,13 +40,7 @@ class App extends Component {
             )}
           />
           <Route exact path="/workorders" component={WorkOrderList} />
-          <Route
-            exact
-            path="/"
-            render={routeProps => (
-              <WorkOrderIndex data={this.state.data} {...routeProps} />
-            )}
-          />
+          <Route exact path="/" component={WorkOrderIndex} />
         </Grid>
       </div>
     );

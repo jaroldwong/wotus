@@ -7,7 +7,6 @@ router
     WorkOrder.find({})
       .then(workorders => {
         res.status(200).json(workorders);
-        console.log(workorders);
       })
       .catch(error => {
         console.log(error);

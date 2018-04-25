@@ -6,6 +6,7 @@ import {
   FormControl,
   Button
 } from 'react-bootstrap';
+import axios from 'axios';
 
 class FormNew extends Component {
   constructor(props) {
@@ -24,9 +25,20 @@ class FormNew extends Component {
     this.setState({ [name]: value });
   };
 
+  createWorkOrder = formData => {
+    axios
+      .post('/api/workorders', formData)
+      .then(res => {
+        this.props.history.push('/');
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
   handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
+    this.createWorkOrder(this.state);
   };
 
   render() {
