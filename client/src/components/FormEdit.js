@@ -33,10 +33,9 @@ class FormEdit extends Component {
     e.preventDefault();
 
     const id = this.props.match.params.id;
-
-    axios
-      .put(`/api/workorders/${id}`, this.state)
-      .then(this.props.history.push('/'));
+    axios.put(`/api/workorders/${id}`, this.state).then(() => {
+      this.props.history.push('/');
+    });
   };
 
   render() {
