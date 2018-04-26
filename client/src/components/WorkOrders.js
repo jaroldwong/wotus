@@ -21,29 +21,19 @@ class WorkOrders extends Component {
   };
 
   deleteWorkOrder = event => {
-    axios.delete(`/api/workorders/${event.target.id}`).then(() => {
-      this.fetchState();
+    const id = event.target.id;
+    this.setState(prevState => {
+      return { data: prevState.data.filter(wo => wo._id !== id) };
     });
+    axios.delete(`/api/workorders/${id}`);
+    //.then(() => {this.fetchState();});
   };
 
   render() {
-    // const grid = (
-    //   <div className="flex-container">
-    //     {this.state.data.map(wo => (
-    //       <WorkOrder
-    //         subject={wo.subject}
-    //         submitter={wo.submitter}
-    //         status={wo.status}
-    //         details={wo.details}
-    //       />
-    //     ))}
-    //   </div>
-    // );
-
-    const list = (
+    return (
       <ListGroup>
-        {this.state.data.map((wo, index) => (
-          <ListGroupItem>
+        {this.state.data.map(wo => (
+          <ListGroupItem key={wo._id}>
             <Link to={`/workorders/${wo._id}`}>{wo.subject}</Link>
             <Button
               className="pull-right"
@@ -58,8 +48,6 @@ class WorkOrders extends Component {
         ))}
       </ListGroup>
     );
-
-    return list;
   }
 }
 
