@@ -6,25 +6,22 @@ import {
   FormControl,
   Button
 } from 'react-bootstrap';
-import { data } from '../seed';
+import axios from 'axios';
 
 class FormEdit extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      subject: '',
-      submitter: '',
-      status: '',
-      details: ''
-    };
-  }
+  state = {
+    subject: '',
+    submitter: '',
+    status: '',
+    details: ''
+  };
 
   componentDidMount() {
     const id = this.props.match.params.id;
-    const resource = data[id];
 
-    this.setState(resource);
+    axios.get(`/api/workorders/${id}`).then(res => {
+      this.setState(res.data);
+    });
   }
 
   handleChange = e => {
@@ -34,7 +31,12 @@ class FormEdit extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    this.props.onSubmit(this.state);
+
+    const id = this.props.match.params.id;
+
+    axios
+      .put(`/api/workorders/${id}`, this.state)
+      .then(this.props.history.push('/'));
   };
 
   render() {

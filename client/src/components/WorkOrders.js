@@ -6,7 +6,7 @@ import axios from 'axios';
 
 // import WorkOrder from './WorkOrder';
 
-class WorkOrderIndex extends Component {
+class WorkOrders extends Component {
   state = { data: [] };
 
   componentDidMount() {
@@ -15,7 +15,8 @@ class WorkOrderIndex extends Component {
 
   fetchState = () => {
     axios.get('/api/workorders').then(res => {
-      this.setState(res);
+      console.log(res.data);
+      this.setState({ data: res.data });
     });
   };
 
@@ -41,7 +42,7 @@ class WorkOrderIndex extends Component {
       <ListGroup>
         {this.state.data.map((wo, index) => (
           <ListGroupItem>
-            <Link to={`/workorders/${index}`}>{wo.subject}</Link>
+            <Link to={`/workorders/${wo._id}`}>{wo.subject}</Link>
             <Button
               className="pull-right"
               bsStyle="danger"
@@ -60,4 +61,4 @@ class WorkOrderIndex extends Component {
   }
 }
 
-export default WorkOrderIndex;
+export default WorkOrders;

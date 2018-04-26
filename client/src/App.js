@@ -9,12 +9,10 @@ import FormEdit from './components/FormEdit';
 import WorkOrders from './components/WorkOrders';
 
 class App extends Component {
-  updateWorkOrder = formData => {};
-
   render() {
     return (
       <BrowserRouter>
-        <div>
+        <React.Fragment>
           <Navbar fixedTop>
             <Navbar.Header>
               <Navbar.Brand>
@@ -29,17 +27,11 @@ class App extends Component {
           </Navbar>
 
           <Grid>
-            {/* <Route path="/new" component={FormNew} /> */}
             <Route path="/new" component={FormNew} />
-            <Route
-              path="/workorders/:id"
-              render={routeProps => (
-                <FormEdit onSubmit={this.updateWorkOrder} {...routeProps} />
-              )}
-            />
+            <Route path="/workorders/:id" component={FormEdit} />
             <Route exact path="/" component={WorkOrders} />
           </Grid>
-        </div>
+        </React.Fragment>
       </BrowserRouter>
     );
   }
