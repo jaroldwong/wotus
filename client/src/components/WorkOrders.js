@@ -21,7 +21,9 @@ class WorkOrders extends Component {
   };
 
   deleteWorkOrder = event => {
-    axios.delete(`/api/workorders/${event.target.id}`).then(this.fetchState());
+    axios.delete(`/api/workorders/${event.target.id}`).then(() => {
+      this.fetchState();
+    });
   };
 
   render() {
