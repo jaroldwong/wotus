@@ -64,15 +64,21 @@ class FormNew extends Component {
             onChange={this.handleChange}
           />
         </FormGroup>
-        <FormGroup controlId="formStatusLine">
+        <FormGroup controlId="formStatusSelect">
           <ControlLabel>Status</ControlLabel>
           <FormControl
+            componentClass="select"
             name="status"
             type="text"
             placeholder="Status"
             value={this.state.status}
             onChange={this.handleChange}
-          />
+          >
+            <option value="New">New</option>
+            <option value="In Progress">In Progress</option>
+            <option value="Pending">Pending</option>
+            <option value="Complete">Complete</option>
+          </FormControl>
         </FormGroup>
         <FormGroup controlId="formDetails">
           <ControlLabel>Details</ControlLabel>
