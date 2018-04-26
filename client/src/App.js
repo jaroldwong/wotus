@@ -4,10 +4,9 @@ import { BrowserRouter, Route, Link } from 'react-router-dom';
 import { LinkContainer } from 'react-router-bootstrap';
 import './App.css';
 
-import WorkOrderList from './components/WorkOrderList';
 import FormNew from './components/FormNew';
 import FormEdit from './components/FormEdit';
-import WorkOrderIndex from './components/WorkOrderIndex';
+import WorkOrders from './components/WorkOrders';
 
 class App extends Component {
   updateWorkOrder = formData => {};
@@ -38,8 +37,7 @@ class App extends Component {
                 <FormEdit onSubmit={this.updateWorkOrder} {...routeProps} />
               )}
             />
-            <Route exact path="/workorders" component={WorkOrderList} />
-            <Route exact path="/" component={WorkOrderIndex} />
+            <Route exact path="/" component={WorkOrders} />
           </Grid>
         </div>
       </BrowserRouter>
