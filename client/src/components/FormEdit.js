@@ -6,21 +6,25 @@ import {
   FormControl,
   Button
 } from 'react-bootstrap';
+import Spinner from 'react-spinkit';
 import axios from 'axios';
 
 class FormEdit extends Component {
   state = {
-    subject: '',
-    submitter: '',
-    status: '',
-    details: ''
+    isLoading: true,
+    formData: {
+      subject: '',
+      submitter: '',
+      status: '',
+      details: ''
+    }
   };
 
   componentDidMount() {
     const id = this.props.match.params.id;
 
     axios.get(`/api/workorders/${id}`).then(res => {
-      this.setState(res.data);
+      this.setState({ ...res.data, isLoading: false });
     });
   }
 
@@ -39,6 +43,16 @@ class FormEdit extends Component {
   };
 
   render() {
+    const { isLoading } = this.state;
+
+    if (isLoading) {
+      return (
+        <div className="text-center">
+          <Spinner name="three-bounce" />
+        </div>
+      );
+    }
+
     return (
       <Form>
         <FormGroup controlId="formSubjectLine">
