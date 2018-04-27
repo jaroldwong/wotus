@@ -1,20 +1,41 @@
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Panel } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Panel, Button } from 'react-bootstrap';
 
-const WorkOrder = props => (
-  <Panel className="flex-item">
-    <Panel.Heading>{props.subject}</Panel.Heading>
-    <Panel.Body>{props.details}</Panel.Body>
-    <Panel.Footer>Submitted by: {props.submitter}</Panel.Footer>
-  </Panel>
-);
+class WorkOrder extends Component {
+  _onClick = () => {
+    this.props.onDelete(this.props.id);
+  };
+
+  render() {
+    const { path, subject, details } = this.props;
+    return (
+      <Panel>
+        <Panel.Heading>
+          <Link to={path}>{subject}</Link>
+          {/* <Badge pullRight>X</Badge> */}
+          <Button
+            className="pull-right"
+            bsStyle="danger"
+            bsSize="xsmall"
+            onClick={this._onClick}
+          >
+            Delete
+          </Button>
+        </Panel.Heading>
+        <Panel.Body>{details}</Panel.Body>
+      </Panel>
+    );
+  }
+}
 
 WorkOrder.propTypes = {
+  id: PropTypes.string.isRequired,
+  path: PropTypes.string.isRequired,
   subject: PropTypes.string.isRequired,
-  status: PropTypes.string.isRequired,
   details: PropTypes.string.isRequired,
-  submitter: PropTypes.string.isRequired
+  onDelete: PropTypes.func.isRequired
 };
 
 export default WorkOrder;
