@@ -14,7 +14,6 @@ class WorkOrder extends Component {
       <Panel>
         <Panel.Heading>
           <Link to={path}>{subject}</Link>
-          {/* <Badge pullRight>X</Badge> */}
           <Button
             className="pull-right"
             bsStyle="danger"
