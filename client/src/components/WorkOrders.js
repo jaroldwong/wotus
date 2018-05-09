@@ -3,9 +3,8 @@ import axios from 'axios';
 
 import FilterButtons from './FilterButtons';
 import NewModal from './NewModal';
+// import EditModal from './EditModal';
 import WorkOrder from './WorkOrder';
-
-import { Well, Panel, Glyphicon } from 'react-bootstrap';
 
 class WorkOrders extends Component {
   state = { data: [] };
@@ -41,9 +40,10 @@ class WorkOrders extends Component {
           <WorkOrder
             key={wo._id}
             id={wo._id}
-            path={`/workorders/${wo._id}`}
             subject={wo.subject}
             details={wo.details}
+            wo={wo}
+            fetchState={this.fetchState}
             onDelete={this.deleteWorkOrder}
           />
         ))}
