@@ -1,40 +1,46 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { Panel, Button } from 'react-bootstrap';
 
 class WorkOrder extends Component {
-  _onClick = () => {
-    this.props.onDelete(this.props.id);
+  handleEdit = () => {
+    this.props.onEdit(this.props.wo._id);
+  };
+
+  handleDelete = () => {
+    this.props.onDelete(this.props.wo._id);
   };
 
   render() {
-    const { path, subject, details } = this.props;
+    const { subject, details } = this.props.wo;
+
     return (
-      <Panel>
-        <Panel.Heading>
-          <Link to={path}>{subject}</Link>
-          {/* <Badge pullRight>X</Badge> */}
-          <Button
-            className="pull-right"
-            bsStyle="danger"
-            bsSize="xsmall"
-            onClick={this._onClick}
-          >
-            Delete
-          </Button>
-        </Panel.Heading>
-        <Panel.Body>{details}</Panel.Body>
-      </Panel>
+      <React.Fragment>
+        <Panel>
+          <Panel.Heading>
+            <Button bsStyle="link" onClick={this.handleEdit}>
+              {subject}
+            </Button>
+
+            <Button
+              className="pull-right"
+              bsStyle="danger"
+              bsSize="xsmall"
+              onClick={this.handleDelete}
+            >
+              Delete
+            </Button>
+          </Panel.Heading>
+          <Panel.Body>{details}</Panel.Body>
+        </Panel>
+      </React.Fragment>
     );
   }
 }
 
 WorkOrder.propTypes = {
-  id: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
-  subject: PropTypes.string.isRequired,
-  details: PropTypes.string.isRequired,
+  wo: PropTypes.object.isRequired,
+  onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired
 };
 
