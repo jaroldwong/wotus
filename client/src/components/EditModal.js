@@ -7,7 +7,6 @@ import {
   FormControl,
   ControlLabel
 } from 'react-bootstrap';
-import axios from 'axios';
 
 class EditModal extends Component {
   state = {
@@ -22,22 +21,8 @@ class EditModal extends Component {
     this.setState({ [name]: value });
   };
 
-  updateWorkOrder = formData => {
-    const id = this.props.data._id;
-    axios
-      .put(`/api/workorders/${id}`, formData)
-      .then(res => {
-        this.setState = {};
-        this.props.onClose();
-        this.props.fetchState();
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
   handleSubmit = () => {
-    this.updateWorkOrder(this.state);
+    this.props.onSubmit(this.props.data._id, this.state);
   };
 
   render() {

@@ -1,52 +1,24 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
 import { Panel, Button } from 'react-bootstrap';
-import axios from 'axios';
-
-import EditModal from './EditModal';
 
 class WorkOrder extends Component {
-  state = {
-    editMode: false
+  handleEdit = () => {
+    this.props.onEdit(this.props.wo._id);
   };
 
-  _onClick = () => {
-    this.props.onDelete(this.props.id);
-  };
-
-  toggleEditMode = () => {
-    this.setState(prevState => ({
-      editMode: !prevState.editMode
-    }));
-  };
-
-  handleSubmit = values => {
-    const id = this.props.id;
-    axios.put(`/api/workorders/${id}`, values).then(() => {
-      this.toggleEditMode();
-    });
+  handleDelete = () => {
+    this.props.onDelete(this.props.wo._id);
   };
 
   render() {
-    const { subject, details } = this.props;
-
-    const editing = this.state.editMode ? (
-      <EditModal
-        show={this.state.editMode}
-        data={this.props.wo}
-        fetchState={this.props.fetchState}
-        onClose={this.toggleEditMode}
-        onSubmit={this.handleSubmit}
-      />
-    ) : null;
+    const { subject, details } = this.props.wo;
 
     return (
       <React.Fragment>
-        {editing}
         <Panel>
           <Panel.Heading>
-            <Button bsStyle="link" onClick={this.toggleEditMode}>
+            <Button bsStyle="link" onClick={this.handleEdit}>
               {subject}
             </Button>
 
@@ -54,7 +26,7 @@ class WorkOrder extends Component {
               className="pull-right"
               bsStyle="danger"
               bsSize="xsmall"
-              onClick={this._onClick}
+              onClick={this.handleDelete}
             >
               Delete
             </Button>
@@ -67,10 +39,8 @@ class WorkOrder extends Component {
 }
 
 WorkOrder.propTypes = {
-  id: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
-  subject: PropTypes.string.isRequired,
-  details: PropTypes.string.isRequired,
+  wo: PropTypes.object.isRequired,
+  onEdit: PropTypes.func.isRequired,
   onDelete: PropTypes.func.isRequired
 };
 
