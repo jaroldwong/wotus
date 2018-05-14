@@ -7,7 +7,13 @@ import EditModal from './EditModal';
 import WorkOrder from './WorkOrder';
 
 class WorkOrders extends Component {
-  state = { data: [], currentWO: null, isEditing: false };
+  state = {
+    data: [],
+    filteredData: [],
+    currentWO: null,
+    isEditing: false,
+    filter: ''
+  };
 
   componentDidMount() {
     this.fetchState();
@@ -17,6 +23,31 @@ class WorkOrders extends Component {
     axios.get('/api/workorders').then(res => {
       this.setState({ data: res.data });
     });
+  };
+
+  updateFilter = filter => {
+    debugger;
+    let filteredData = [];
+
+    switch (filter) {
+      case 'all':
+        filteredData = this.state.data;
+        break;
+      case 'active':
+        filteredData = this.state.data.filter(
+          wo => !(wo.status === 'completed')
+        );
+        break;
+      case 'completed':
+        filteredData = this.state.data.filter(
+          wo => wo.status.toLowerCase() === 'completed'
+        );
+        break;
+      default:
+        filteredData = this.state.data;
+    }
+
+    this.setState({ filteredData });
   };
 
   toggleEdit = id => {
@@ -58,11 +89,15 @@ class WorkOrders extends Component {
   };
 
   render() {
-    const workorders = this.state.data;
+    let workorders = this.state.filteredData;
+
+    if (workorders.length === 0) {
+      workorders = this.state.data;
+    }
 
     return (
       <React.Fragment>
-        <FilterButtons />
+        <FilterButtons updateFilter={this.updateFilter} />
 
         <NewModal fetchState={this.fetchState} />
 

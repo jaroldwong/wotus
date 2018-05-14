@@ -85,7 +85,7 @@ class NewModal extends Component {
                 <option value="New">New</option>
                 <option value="In Progress">In Progress</option>
                 <option value="Pending">Pending</option>
-                <option value="Complete">Complete</option>
+                <option value="Completed">Completed</option>
               </FormControl>
             </FormGroup>
             <FormGroup controlId="formDetails">
